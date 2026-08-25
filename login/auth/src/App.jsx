@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-
-
+import Navbar from './components/nav.jsx'
+import Board from './components/board.jsx'
 
 
 
@@ -13,14 +13,13 @@ function App() {
 
   return (
     <>
-    <div className="flex justify-center items-center">
     <header className="header">
-      <h1 className="text-2xl">Worldle!</h1>
+      <Navbar />     
     </header>
-    <main className="main">
-      
+    <main className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <Board />
     </main>
-    </div>
+    
       
     </>
   )
