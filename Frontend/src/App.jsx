@@ -1,35 +1,47 @@
-import { useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/nav.jsx'
-import Wordle from './components/wordle.jsx'
-
-
-
+import Clondle from './components/clondle.jsx'
+import Login from './login.jsx'
+import Register from './register.jsx'
+import Home from './Home.jsx'
 
 
 
 function App() {
 
-  const [backendData, setBackendData] = useState([{}]);
-
-  useEffect(() => {
-    fetch("/api")
-      .then((response) => {
-        if(!response.ok) {
-          throw new Error(`Request failed with status ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => setBackendData(data));
-  }, []);
+  
 
   return (
     <>
-    
-      <Navbar />     
-    
-    
-      <Wordle solution="REACT" />
+      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route 
+        path="/login"
+         element={<>
+         <Navbar />
+         <Login />
+         </>} />
+        <Route
+         path="/register" 
+         element={
+         <>
+         <Navbar />
+         <Register />
+         </>} />
+        <Route 
+        path="/clondle" 
+        element={
+        <>
+          <Navbar />
+          <Clondle solution="hello" />
+        </>
+        } />
+      </Routes>
+      
+      
+      
     
     
       

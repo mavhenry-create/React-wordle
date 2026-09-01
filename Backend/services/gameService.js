@@ -46,12 +46,17 @@ export function authenticate() {
   return request("/authenticate", "POST");
 }
 
-export function createMatch(matchData) {
-  return request("", "POST", matchData);
+export function createMatch(matchData, token) {
+  return request("", "POST", matchData, token);
 }
 
 export function verifyMatch(word, token) {
-  return request(`/verify?word=${encodeURIComponent(word)}`, "PATCH", null, token);
+  return request(
+    `/verify?word=${encodeURIComponent(word)}`,
+    "PATCH",
+    null,
+    token,
+  );
 }
 
 export function deleteMatch() {
