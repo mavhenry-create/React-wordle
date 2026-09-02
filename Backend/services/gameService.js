@@ -1,64 +1,19 @@
-import dotenv from "dotenv";
+const RANDOM_WORD_URL = "https://random-word-api.herokuapp.com/word";
+const DICTIONARY_URL = "https://freedictionaryapi.com/api/v1/entries/en";
 
-dotenv.config();
-
-const API_KEY = process.env.API_KEY;
-const BASE_URL =
-  process.env.BASE_URL || "https://wordle-api.p.rapidapi.com/api/match";
-
-if (!API_KEY) {
-  console.error("API_KEY is not defined in the environment variables.");
-  process.exit(1);
-}
-
-function getOptions(method, body) {
-  const options = {
-    method: method,
-    headers: {
-      "X-RapidAPI-Key": API_KEY,
-      "X-RapidAPI-Host": "wordle-api.p.rapidapi.com",
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  };
-  if (body !== undefined) {
-    options.headers["Content-Type"] = "application/json";
-    options.body = JSON.stringify(body);
-  }
-  return options;
-}
-
-async function request(path, method, body, token) {
-  const options = getOptions(method, body);
-  if (token) {
-    options.headers["Authorization"] = `Bearer ${token}`;
-  }
-  const response = await fetch(`${BASE_URL}${path}`, options);
-
+export async function getRandomWord(length = 5) {
+  const response = await fetch(`${RANDOM_WORD_URL}?length=${length}`);
   if (!response.ok) {
-    throw new Error(
-      `API request failed with status ${response.status}: ${response.statusText}`,
-    );
+    throw new Error(`'Random word API failed' with status ${response.status}`);
   }
-  return await response.json();
+  const [word] = await response.json();
+  console.log('Random word fetched:', word);
+  return word;
 }
 
-export function authenticate() {
-  return request("/authenticate", "POST");
-}
-
-export function createMatch(matchData, token) {
-  return request("", "POST", matchData, token);
-}
-
-export function verifyMatch(word, token) {
-  return request(
-    `/verify?word=${encodeURIComponent(word)}`,
-    "PATCH",
-    null,
-    token,
+export async function isValidWord(word) {
+  const response = await fetch(
+    `${DICTIONARY_URL}/${encodeURIComponent(word.toLowerCase())}`,
   );
-}
-
-export function deleteMatch() {
-  return request("", "DELETE");
+  return response.ok;
 }
