@@ -45,7 +45,8 @@ export default function Keyboard({ usedKeys }) {
             return (
               <div
                 key={key}
-                className={`${color ?? ""} w-10 h-10 shrink-0 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase`}
+                style={{ backgroundColor: color }}
+                className={` w-10 h-10 shrink-0 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase`}
               >
                 {key}
               </div>
