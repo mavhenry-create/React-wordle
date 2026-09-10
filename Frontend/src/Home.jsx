@@ -18,14 +18,24 @@ export default function Home() {
           Create an account to trackyour streak and statistics!
         </h2>
         <button
-          onClick={() => navigate("/register")}
+          onClick={() => {
+            const returnTo = encodeURIComponent("http://localhost:5173/");
+
+            window.location.href =
+              `http://localhost:3000/auth/login?screen_hint=signup&returnTo=${returnTo}`;
+          }}
           className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-gray-200 transition duration-300"
         >
           Register
         </button>
         <h2 className="text-lg text-white">Already have an account?</h2>
         <button
-          onClick={() => navigate("/login")}
+          onClick={() => {
+            const returnTo = encodeURIComponent("http://localhost:5173/");
+
+            window.location.href =
+              `http://localhost:3000/auth/login?returnTo=${returnTo}`;
+          }}
           className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-gray-200 transition duration-300"
         >
           Login

@@ -43,15 +43,17 @@ export async function loginUser({ username, password }) {
 
 
 export async function getCurrentUser() {
-    const res = await fetch(`${API_BASE}/profile`, {
-        method: 'GET',
-        headers: authHeaders(),
-    });
-    const body = await res.json().catch(() => ({}));
-    if (!res.ok) {
-        throw new Error(body.message || body.errors?.[0]?.msg || 'Failed to fetch current user');
-    }
-    return body;
+  const response = await fetch("http://localhost:3000/api/auth/profile", {
+    credentials: "include",
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to load profile");
+  }
+
+  return data;
 }
 
 
@@ -70,5 +72,5 @@ export async function logoutUser() {
 export async function logout() {
     await logoutUser();
     localStorage.removeItem("token");
-    
+    localStorage.removeItem("guestId");
 }

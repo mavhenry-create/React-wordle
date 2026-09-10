@@ -1,47 +1,35 @@
 const API_BASE = "/api/game";
 
-function authHeaders() {
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  const token = localStorage.getItem("token");
-  const guestId = localStorage.getItem("guestId");
-
-  if (token) headers.Authorization = `Bearer ${token}`;
-  else if (guestId) headers["x-guest-id"] = guestId;
-
-  return headers;
-}
-
-function captureGuestId(res) {
-  const guestId = res.headers.get("x-guest-id");
-  if (guestId) localStorage.setItem("guestId", guestId);
-}
-
 export async function startGame() {
-  const res = await fetch(`${API_BASE}/start`, {
+  const response = await fetch(`${API_BASE}/start`, {
     method: "POST",
-    headers: authHeaders(),
+    credentials: "include",
   });
-  captureGuestId(res);
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || "Failed to start game");
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || data.error || "Failed to start game");
   }
-  
-  return res.json();
+
+  return data;
 }
 
 export async function verifyWord(word) {
-  const res = await fetch(`${API_BASE}/verify`, {
+  const response = await fetch(`${API_BASE}/verify`, {
     method: "POST",
-    headers: authHeaders(),
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ word }),
   });
-  captureGuestId(res);
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || "Failed to verify word");
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || data.error || "Failed to verify word");
   }
-  return res.json();
+
+  return data;
 }

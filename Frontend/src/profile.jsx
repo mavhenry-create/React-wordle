@@ -1,27 +1,26 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "./services/profileAPI.js";
 
 export default function Profile() {
-    const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+  const [error, setError] = useState("");
 
-    return (
-        <>
-        <div className='profile-container flex flex-col justify-center items-center'>
-        <h1 className='text-3xl font-bold mb-4'>Profile Page</h1>
-        <p className='mb-4'>Welcome to your profile page. Here you can view your personal stat's and Streaks for your account.</p>
-        
+  useEffect(() => {
+    getCurrentUser()
+      .then(setProfile)
+      .catch((err) => setError(err.message));
+  }, []);
 
+  if (error) return <p>{error}</p>;
+  if (!profile) return <p>Loading...</p>;
 
-
-        <button
-          onClick={() => navigate("/settings")}
-          className='hover:pointer-fine:hover:cursor-pointer hover:bg-blue-100 p-2'
-        >
-          Go to Settings
-        </button>
-
-        </div>
-        
-        </>
-    );
+  return (
+    <div>
+      <h1>Profile</h1>
+      <p>{profile.user.display_name}</p>
+      <p>Games played: {profile.stats.games_played}</p>
+      <p>Wins: {profile.stats.wins}</p>
+      <p>Total guesses: {profile.stats.total_guesses}</p>
+    </div>
+  );
 }

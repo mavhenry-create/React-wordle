@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { startGame, verifyWord } from "../controllers/gameController.js";
-import { optionalAuthenticate } from "../middleware/authentication.js";
+import { requireUser } from "../middleware/authentication.js";
 
 const router = Router();
 
-router.post("/start", optionalAuthenticate, startGame);
-router.post("/verify", optionalAuthenticate, verifyWord);
+router.post("/start", requireUser, startGame);
+router.post("/verify", requireUser, verifyWord);
 
 export default router;

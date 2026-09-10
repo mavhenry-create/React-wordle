@@ -1,6 +1,7 @@
 import { getRandomWord, isValidWord } from "../services/gameService.js";
 import { scoreGuess } from "../utils/wordScoring.js";
-import { saveContextForUser, getContextForUser } from "../data/matchContext.js";
+import { saveContextForUser, getContextForUser, clearContextForUser } from "../data/matchContext.js";
+import { saveGame } from "../data/gameData.js";
 
 const WORD_LENGTH = 5;
 const MAX_TURNS = 6;
@@ -40,12 +41,25 @@ export async function verifyWord(req, res) {
   const isCorrect = word.toUpperCase() === state.solution;
   const gameOver = isCorrect || state.guesses.length >= MAX_TURNS;
 
-  saveContextForUser(req.user.id, state);
-  res.json({
-    guess,
-    turn: state.guesses.length,
-    isCorrect,
-    gameOver,
-    ...(gameOver ? { correctWord: state.solution } : {}),
+if (gameOver) {
+  await saveGame({
+    userId: req.user.id,
+    solution: state.solution,
+    won: isCorrect,
+    guessesUsed: state.guesses.length,
   });
+
+  clearContextForUser(req.user.id);
+} else {
+  saveContextForUser(req.user.id, state);
+}
+
+return res.json({
+  guess,
+  turn: state.guesses.length,
+  isCorrect,
+  gameOver,
+  ...(gameOver ? { correctWord: state.solution } : {}),
+});
+
 }

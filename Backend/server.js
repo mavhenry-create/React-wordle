@@ -1,18 +1,30 @@
 import express from "express";
+import "dotenv/config";
 import cors from "cors";
-import bodyParser from "body-parser";
-import dotenv from "dotenv";
+import { createAuth0 } from '@auth0/auth0-express';
 import authRoutes from "./routes/authRoutes.js";
 import gameRoutes from "./routes/gameRoutes.js";
 
-dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ exposedHeaders: ["x-guest-id"] }));
+app.use(createAuth0({
+  domain: process.env.AUTH0_DOMAIN,
+  clientId: process.env.AUTH0_CLIENT_ID,
+  clientSecret: process.env.AUTH0_CLIENT_SECRET,
+  sessionSecret: process.env.AUTH0_SESSION_SECRET,
+  appBaseUrl: process.env.APP_BASE_URL
+}));
+
+app.use(cors({ origin: "http://localhost:5173",
+    credentials: true, }));
 app.use(express.json());
-app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+  res.redirect("http://localhost:5173/");
+});
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from the backend!" });
