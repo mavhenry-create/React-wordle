@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { startGame, verifyWord } from "../components/gameAPI.js";
+import { startGame, verifyWord } from "../services/gameAPI.js";
 
 const STATE_TO_COLOR = {
   correct: "green",
@@ -77,7 +77,8 @@ const useWordle = () => {
   );
 
   const handleKeyup = ({ key }) => {
-    console.log(key);
+    const tag = document.activeElement?.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
     if (key === "Enter") {
       if (!gameReady || gameOver || turn > 5 || isSubmitting) return;
       if (history.includes(currentGuess)) {

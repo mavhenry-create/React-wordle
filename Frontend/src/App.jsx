@@ -5,6 +5,7 @@ import Clondle from "./components/clondle.jsx";
 import Login from "./login.jsx";
 import Register from "./register.jsx";
 import Home from "./Home.jsx";
+import Profile from "./profile.jsx";
 
 function App() {
   return (
@@ -26,6 +27,15 @@ function App() {
             <>
               <Navbar />
               <Register />
+            </>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <>
+              <Navbar />
+              <Profile />
             </>
           }
         />
