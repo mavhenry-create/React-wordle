@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../services/authAPI";
 import Dropdown from "./Dropdown/Dropdown.jsx";
+import Card from "./modal/card.jsx";
+
 
 function Navbar() {
   const [user, setUser] = useState(null);

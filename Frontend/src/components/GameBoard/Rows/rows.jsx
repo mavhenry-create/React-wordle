@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./rows.css";
 export default function Rows({ guess, currentGuess, length }) {
   if (guess) {
     return (
@@ -7,10 +7,7 @@ export default function Rows({ guess, currentGuess, length }) {
         {guess.map((letter, index) => (
           <div
             key={index}
-            style={{ backgroundColor: letter.color }}
-            className={
-              " w-20 h-20 shrink-0 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase"
-            }
+            className={`tile ${letter.color} w-20 h-20 shrink-0 m-0.5 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase`}
           >
             {letter.key}
           </div>
@@ -26,7 +23,7 @@ export default function Rows({ guess, currentGuess, length }) {
         {letters.map((letter, index) => (
           <div
             key={index}
-            className="filled w-20 h-20 shrink-0 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase"
+            className="filled w-20 h-20 shrink-0 border border-gray-300 flex justify-center items-center mt-0.5 text-2xl font-bold uppercase"
           >
             {letter}
           </div>
@@ -34,7 +31,7 @@ export default function Rows({ guess, currentGuess, length }) {
         {[...Array(length - letters.length)].map((_, index) => (
           <div
             key={index}
-            className="w-20 h-20 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase"
+            className="w-20 h-20 m-0.5 border border-gray-300 flex justify-center items-center mt-0.5 text-2xl font-bold uppercase"
           ></div>
         ))}
       </div>
@@ -42,11 +39,11 @@ export default function Rows({ guess, currentGuess, length }) {
   }
 
   return (
-    <div className="row flex justify-center items-center">
+    <div className="row flex justify-center items-center mt-1 text-2xl font-bold uppercase">
       {[...Array(length)].map((_, index) => (
         <div
           key={index}
-          className="w-20 h-20 shrink-0 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase"
+          className="w-20 h-20 shrink-0 m-0.5 border border-gray-300 flex justify-center items-center mt-0.5 text-2xl font-bold uppercase"
         ></div>
       ))}
     </div>

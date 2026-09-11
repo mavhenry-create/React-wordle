@@ -33,6 +33,15 @@ app.get("/api", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/game", gameRoutes);
 
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Not Found" });
+  if (res.status(500)) {
+    res.json({ message: "Internal Server Error" });
+  }
+
+  next();
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
