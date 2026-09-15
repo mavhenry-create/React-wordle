@@ -23,7 +23,7 @@ app.use(cors({ origin: "http://localhost:5173",
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.redirect("http://localhost:5173/");
+  res.redirect("http://localhost:5173/clondle");
 });
 
 app.get("/api", (req, res) => {

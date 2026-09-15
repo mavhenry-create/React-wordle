@@ -3,6 +3,9 @@ import useWordle from "../hooks/useWordle.jsx";
 import Grid from "./GameBoard/Grid/grid.jsx";
 import Keyboard from "./GameBoard/KeyBoard/keyboard.jsx";
 import GameModal from "./modal/Game/gamemodal.jsx";
+import Card from "./modal/Error/card.jsx";
+
+
 
 export default function Wordle() {
   const {
@@ -36,15 +39,15 @@ export default function Wordle() {
 
   return (
     <div className="">
-      {error && <p>{error}</p>}
+      {error && <Card message={error} />}
       <Grid
         currentGuess={currentGuess}
         guesses={guesses}
         turn={turn}
         length={wordLength}
       />
-      <Keyboard usedKeys={usedKeys} />
       {showModal && <GameModal isCorrect={isCorrect} turn={turn} />}
+      <Keyboard usedKeys={usedKeys} />      
     </div>
   );
 }

@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "./services/profileAPI.js";
-
+import { getCurrentUser } from "./services/authAPI.js";
+import Card from "./components/modal/Error/card.jsx";
+import Settings from "./components/modal/Profile/settings.jsx";
 
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState("");
+  const [isOpen, setIsOpen] = useState(null);
+
+  const toggleSettings = () =>{  
+    setIsOpen((prev) => !prev);
+  }
+
 
   useEffect(() => {
     getCurrentUser()
@@ -13,10 +20,11 @@ export default function Profile() {
       .catch((err) => setError(err.message));
   }, []);
 
-  if (error) return <p>{error}</p>;
+  if (error) return <Card message={error} type="error" />;
   if (!profile) return <p>Loading...</p>;
 
   return (
+    <>
     <div className="profile-container flex justify-center items-center mt-10 ">
       
       <div className="profile-avatar bg-white flex flex-col items-center border border-gray-300 p-4 rounded-lg box-shadow-md shadow-lg">
@@ -41,9 +49,18 @@ export default function Profile() {
         <hr className="my-4 w-full border-t border-gray-300" />
         <p>Current streak: {profile.stats.streak ? profile.stats.streak : 0}</p>
       </div>
-      <div className="settings mb-4">
-      
-      </div>
     </div>
+
+      <div className="settings mt-10 flex flex-col justify-center items-center">
+        <button
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+        onClick={toggleSettings}
+        >
+          Open Settings
+        </button>
+      {isOpen && <Settings />}
+      </div>
+    
+  </>
   );
 }

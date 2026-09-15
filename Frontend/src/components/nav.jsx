@@ -8,7 +8,7 @@ import Card from "./modal/Error/card.jsx";
 function Navbar() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     getCurrentUser()
       .then(({ user }) => setUser(user))
