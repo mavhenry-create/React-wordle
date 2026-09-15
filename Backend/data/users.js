@@ -45,3 +45,12 @@ export async function findOrCreateUser(auth0User) {
     avatarUrl: auth0User.picture || null,
   });
 }
+
+
+export async function changeOrUpdateUserName(userId, newUsername) {
+  const result = await pool.query(
+    "UPDATE users SET username = $1, updated_at = NOW() WHERE id = $2 RETURNING *",
+    [newUsername, userId]
+  );
+  return result.rows[0];
+}

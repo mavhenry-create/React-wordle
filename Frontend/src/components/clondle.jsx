@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useWordle from "../hooks/useWordle.jsx";
 import Grid from "./GameBoard/Grid/grid.jsx";
 import Keyboard from "./GameBoard/KeyBoard/keyboard.jsx";
-import GameModal from "./modal/gamemodal.jsx";
+import GameModal from "./modal/Game/gamemodal.jsx";
 
 export default function Wordle() {
   const {
@@ -20,14 +20,14 @@ export default function Wordle() {
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyup);
-     
+
     if (isCorrect) {
-      setShowModal(true);
+      setTimeout(() => setShowModal(true), 2000);
       window.removeEventListener("keyup", handleKeyup);
     }
-    
+
     if (turn > 5) {
-      setShowModal(true);
+      setTimeout(() => setShowModal(true), 2000);
       window.removeEventListener("keyup", handleKeyup);
     }
 
@@ -35,7 +35,7 @@ export default function Wordle() {
   }, [handleKeyup, isCorrect, turn]);
 
   return (
-    <div>
+    <div className="">
       {error && <p>{error}</p>}
       <Grid
         currentGuess={currentGuess}

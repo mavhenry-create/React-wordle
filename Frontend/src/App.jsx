@@ -9,7 +9,7 @@ import Profile from "./profile.jsx";
 
 function App() {
   return (
-    <>
+    <div className="app-container relative">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -49,7 +49,7 @@ function App() {
           }
         />
       </Routes>
-    </>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../services/authAPI";
 import Dropdown from "./Dropdown/Dropdown.jsx";
-import Card from "./modal/card.jsx";
+import Card from "./modal/Error/card.jsx";
 
 
 function Navbar() {
@@ -34,14 +34,14 @@ function Navbar() {
     <nav className="bg-gray-800 p-4 min-w-screen flex justify-between items-center">
       <button
         onClick={() => navigate("/clondle")}
-        className="text-white text-2xl font-bold"
+        className="text-white text-2xl font-bold pointer-fine:cursor-pointer"
       >
         Clondle!
       </button>
 
       {user ? (
         <Dropdown
-          buttonText={`Welcome, ${user.username || user.display_name}`}
+          buttonText={`${user.username || user.display_name}`}
           content={
             <>
               <button
