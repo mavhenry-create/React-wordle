@@ -24,8 +24,8 @@ router.get("/profile", async (req, res) => {
 });
 
 router.patch("/settings", requireUser, async (req, res) => {
-  const { difficulty } = req.body;
-  const user = await updateUserSettings(req.user.id, { difficulty });
+  const { difficulty, wordLength } = req.body;
+  const user = await updateUserSettings(req.user.id, { difficulty, wordLength });
   return res.json({ user });
 })
 

@@ -15,14 +15,14 @@ export async function getCurrentUser() {
 }
 
 
-export async function updateUserSettings(difficulty) {
+export async function updateUserSettings(difficulty, wordLength) {
     const response = await fetch("http://localhost:3000/api/auth/settings", {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ difficulty }),
+        body: JSON.stringify({ difficulty, wordLength }),
     });
 
     const data = await response.json().catch(() => ({}));

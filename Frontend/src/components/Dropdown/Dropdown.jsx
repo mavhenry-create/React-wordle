@@ -15,9 +15,9 @@ const Dropdown = ({ buttonText, content }) => {
             const spaceRemaining = window.innerHeight - buttonRef.current.getBoundingClientRect().bottom;
             const contentHeight = contentRef.current.clientHeight;
             const topPostition = spaceRemaining > contentHeight ? null : spaceRemaining - contentHeight;
-            const rightPosition = window.innerWidth - buttonRef.current.getBoundingClientRect().right;
+            
             setDropdownTop(topPostition);
-            setDropdownRight(rightPosition);
+            
         }
         setOpen(!open);
     }

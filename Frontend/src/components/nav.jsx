@@ -31,7 +31,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-800 p-4 min-w-screen flex justify-between items-center">
+    <nav className="bg-gray-800 p-4 min-w-screen flex justify-between items-center pr-10 pl-10">
       <button
         onClick={() => navigate("/clondle")}
         className="text-white text-2xl font-bold pointer-fine:cursor-pointer"

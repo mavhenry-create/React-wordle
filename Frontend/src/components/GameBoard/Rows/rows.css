@@ -32,6 +32,26 @@
     animation-delay: 0.8s;
 }
 
+.row > div:nth-child(6) {
+    animation-delay: 1s;
+}
+
+.row > div:nth-child(7) {
+    animation-delay: 1.2s;
+}
+
+.row > div:nth-child(8) {
+    animation-delay: 1.4s;
+}
+
+.row > div:nth-child(9) {
+    animation-delay: 1.6s;
+}
+
+.row > div:nth-child(10) {
+    animation-delay: 1.8s;
+}
+
 .row.current > div.filled {
     animation: bounce 0.2s ease-in-out forwards;
 }

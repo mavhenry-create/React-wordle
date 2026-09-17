@@ -34,7 +34,7 @@ export default function Profile() {
         <hr className="my-4 w-full border-t border-gray-300" />
         
         <p>Boards Completed: {profile.stats.wins}</p>
-        
+        <p>Difficulty: {profile.user.difficulty}</p>
       </div>
       
       <div className="profile-stats w-90 h-69 pt-4 bg-white border border-gray-300 text-center rounded-lg box-shadow-md shadow-lg">
@@ -48,14 +48,17 @@ export default function Profile() {
     </div>
 
       <div className="settings mt-10 flex flex-col justify-center items-center">
-        <Settings difficulty={profile.user.difficulty} onSave={async (newDifficulty) => {
+        <Settings difficulty={profile.user.difficulty} 
+        wordLength={profile.user.wordLength}
+        onSave={async (newDifficulty, newWordLength) => {
           try {
-            await updateUserSettings(newDifficulty);
+            await updateUserSettings(newDifficulty, newWordLength);
             setProfile((prev) => ({
               ...prev,
               user: {
                 ...prev.user,
                 difficulty: newDifficulty,
+                wordLength: newWordLength,
               },
             }));
           } catch (err) {

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import Card from "../Error/card.jsx";
 import "./settings.css";
-export default function Settings({difficulty, onSave}) {
+export default function Settings({difficulty, wordLength: initialWordLength, onSave}) {
      const [settings, setSettings] = useState(false)
-     const [selected, setSelected] = useState(difficulty ?? 5)
+     const [wordLength, setWordLength] = useState(initialWordLength ?? 5)
+     const [selectedDifficulty, setSelectedDifficulty] = useState(difficulty ?? 5)
     const saveSettings = async () => {
-        await onSave(selected)
+        await onSave(selectedDifficulty, wordLength)
         setSettings(false);
     }
 
@@ -33,8 +34,8 @@ export default function Settings({difficulty, onSave}) {
                 </details>
                 <select 
                     className='mt-4 p-2 w-20 border border-gray-300 rounded'
-                    value={selected}
-                    onChange={(e) => setSelected(Number(e.target.value))}
+                    value={selectedDifficulty}
+                    onChange={(e) => setSelectedDifficulty(Number(e.target.value))}
                 >
                     <option value="1">Easy</option>
                     <option value="2">Medium-Easy</option>
@@ -42,6 +43,17 @@ export default function Settings({difficulty, onSave}) {
                     <option value="4">Medium-Hard</option>
                     <option value="5">Hard</option>
                 </select>
+                <hr className='w-full border-t border-gray-300 my-4' />
+                <label htmlFor="Wordlength">Word Length</label>
+                <input
+                    type="number"
+                    id="Wordlength"
+                    min="5"
+                    max="10"
+                    className='mt-2 p-2 w-15 text-center border border-gray-300 rounded'
+                    value={wordLength}
+                    onChange={(e) => setWordLength(Number(e.target.value))}
+                />
                 <button onClick={saveSettings} className='mt-5 p-2 bg-gray-800 text-white rounded hover:bg-gray-600'>Save Settings</button>
             </div>
             

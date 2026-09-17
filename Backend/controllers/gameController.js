@@ -3,16 +3,16 @@ import { scoreGuess } from "../utils/wordScoring.js";
 import { saveContextForUser, getContextForUser, clearContextForUser } from "../data/matchContext.js";
 import { saveGame } from "../data/gameData.js";
 
-const WORD_LENGTH = 5;
+const Word_LENGTH = 5;
 const MAX_TURNS = 6;
 
 export async function startGame(req, res) {
-  const word = await getRandomWord(WORD_LENGTH, req.user.difficulty);
+  const word = await getRandomWord(req.user.word_length ?? 5, req.user.difficulty ?? 5);
   saveContextForUser(req.user.id, {
     solution: word.toUpperCase(),
     guesses: [],
   });
-  res.json({ wordLength: WORD_LENGTH, maxTurns: MAX_TURNS});
+  res.json({ wordLength: req.user.word_length ?? 5, maxTurns: MAX_TURNS});
 }
 
 export async function verifyWord(req, res) {
