@@ -1,8 +1,8 @@
 const RANDOM_WORD_URL = "https://random-word-api.herokuapp.com/word";
 const DICTIONARY_URL = "https://freedictionaryapi.com/api/v1/entries/en";
 
-export async function getRandomWord(length = 5) {
-  const response = await fetch(`${RANDOM_WORD_URL}?length=${length}`);
+export async function getRandomWord(length = 5, diff = 5) {
+  const response = await fetch(`${RANDOM_WORD_URL}?length=${length}&diff=${diff}`);
   if (!response.ok) {
     throw new Error(`'Random word API failed' with status ${response.status}`);
   }

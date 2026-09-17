@@ -7,7 +7,7 @@ const WORD_LENGTH = 5;
 const MAX_TURNS = 6;
 
 export async function startGame(req, res) {
-  const word = await getRandomWord(WORD_LENGTH);
+  const word = await getRandomWord(WORD_LENGTH, req.user.difficulty);
   saveContextForUser(req.user.id, {
     solution: word.toUpperCase(),
     guesses: [],

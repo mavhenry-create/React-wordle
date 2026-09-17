@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "./services/authAPI.js";
+import { getCurrentUser, updateUserSettings } from "./services/authAPI.js";
 import Card from "./components/modal/Error/card.jsx";
 import Settings from "./components/modal/Profile/settings.jsx";
 
@@ -7,11 +7,7 @@ import Settings from "./components/modal/Profile/settings.jsx";
 export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState("");
-  const [isOpen, setIsOpen] = useState(null);
-
-  const toggleSettings = () =>{  
-    setIsOpen((prev) => !prev);
-  }
+  
 
 
   useEffect(() => {
@@ -52,13 +48,20 @@ export default function Profile() {
     </div>
 
       <div className="settings mt-10 flex flex-col justify-center items-center">
-        <button
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-        onClick={toggleSettings}
-        >
-          Open Settings
-        </button>
-      {isOpen && <Settings />}
+        <Settings difficulty={profile.user.difficulty} onSave={async (newDifficulty) => {
+          try {
+            await updateUserSettings(newDifficulty);
+            setProfile((prev) => ({
+              ...prev,
+              user: {
+                ...prev.user,
+                difficulty: newDifficulty,
+              },
+            }));
+          } catch (err) {
+            setError(err.message);
+          }
+        }}/>
       </div>
     
   </>

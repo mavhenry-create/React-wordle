@@ -54,3 +54,11 @@ export async function changeOrUpdateUserName(userId, newUsername) {
   );
   return result.rows[0];
 }
+
+export async function updateUserSettings(userId, { difficulty }) {
+  const result = await pool.query(
+    "UPDATE users SET difficulty = $1, updated_at = NOW() WHERE id = $2 RETURNING *",
+    [difficulty, userId]
+  );
+  return result.rows[0];
+}
