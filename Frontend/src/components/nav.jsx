@@ -16,16 +16,19 @@ function Navbar() {
   }, []);
 
   const handleLogin = () => {
+    sessionStorage.setItem("authAction", "login")
     window.location.href =
       "http://localhost:3000/auth/login?returnTo=http://localhost:5173/";
   };
 
   const handleSignup = () => {
+    sessionStorage.setItem("authAction", "login")
     window.location.href =
       "http://localhost:3000/auth/login?screen_hint=signup&returnTo=http://localhost:5173/";
   };
 
   const handleLogout = () => {
+    sessionStorage.setItem("authAction", "logout");
     window.location.href =
       "http://localhost:3000/auth/logout?returnTo=http://localhost:5173/";
   };
@@ -50,6 +53,7 @@ function Navbar() {
               >
                 Profile
               </button>
+
 
               <button
                 onClick={handleLogout}

@@ -5,9 +5,12 @@ export default function Settings({difficulty, wordLength: initialWordLength, onS
      const [settings, setSettings] = useState(false)
      const [wordLength, setWordLength] = useState(initialWordLength ?? 5)
      const [selectedDifficulty, setSelectedDifficulty] = useState(difficulty ?? 5)
+     const [alertMessage, setAlertMessage] = useState("");
+
     const saveSettings = async () => {
         await onSave(selectedDifficulty, wordLength)
         setSettings(false);
+        setAlertMessage("Game settings updated successfully.");
     }
 
     return (
