@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Card from "./components/modal/Error/card.jsx";
+import Card from "../components/modal/Error/card.jsx";
 import { useState, useEffect } from "react";
-import { getCurrentUser } from "./services/authAPI.js";
-import Navbar from "./components/nav.jsx";
-import Clondle from "./components/clondle.jsx";
+import { getCurrentUser } from "../services/authAPI.js";
+import Navbar from "../components/nav.jsx";
+import Clondle from "./clondle.jsx";
 import Login from "./login.jsx";
 import Register from "./register.jsx";
 import Home from "./Home.jsx";
@@ -13,7 +13,7 @@ import Profile from "./profile.jsx";
 function App() {
   const [alertMessage, setAlertMessage] = useState(null);
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     const authAction = sessionStorage.getItem("authAction");
     sessionStorage.removeItem("authAction");
@@ -26,17 +26,22 @@ function App() {
       .then(({ user }) => {
         setUser(user);
         if (authAction === "login") {
-          setAlertMessage({ type: "success", message: `Welcome, ${user.username || user.display_name}!` });
+          setAlertMessage({
+            type: "success",
+            message: `Welcome, ${user.username || user.display_name}!`,
+          });
         }
       })
       .catch(() => {
         setUser(null);
         if (authAction === "login") {
-          setAlertMessage({ type: "error", message: "Something went wrong while logging in." });
+          setAlertMessage({
+            type: "error",
+            message: "Something went wrong while logging in.",
+          });
         }
       });
   }, []);
-
 
   useEffect(() => {
     if (alertMessage) {
@@ -49,7 +54,9 @@ function App() {
       <div className="app-container min-h-screen overflow-x-hidden">
         <Navbar />
         <div className="main-content">
-          {alertMessage && <Card message={alertMessage.message} type={alertMessage.type} />}
+          {alertMessage && (
+            <Card message={alertMessage.message} type={alertMessage.type} />
+          )}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route

@@ -8,6 +8,7 @@ export default function GameModal({ isCorrect, turn}) {
     const handleClick = () => navigate(0); 
     return (
         <div className='game-modal'>
+            
             {isCorrect && (
                 <div>
                 <h2>Congratulations!</h2>

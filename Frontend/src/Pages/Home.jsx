@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "./services/authAPI.js";
+import { getCurrentUser } from "../services/authAPI.js";
 import { useEffect, useState } from "react";
 export default function Home() {
   const [user, setUser] = useState(null);

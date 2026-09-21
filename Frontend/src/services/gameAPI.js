@@ -1,18 +1,29 @@
 const API_BASE = "/api/game";
+let activeStartRequest = null;
 
-export async function startGame() {
-  const response = await fetch(`${API_BASE}/start`, {
-    method: "POST",
-    credentials: "include",
-  });
-
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw new Error(data.message || data.error || "Failed to start game");
+export function startGame() {
+  if (activeStartRequest) {
+    return activeStartRequest;
   }
 
-  return data;
+  activeStartRequest = fetch(`${API_BASE}/start`, {
+    method: "POST",
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || "Failed to start game");
+      }
+
+      return data;
+    })
+    .finally(() => {
+      activeStartRequest = null;
+    });
+
+  return activeStartRequest;
 }
 
 export async function verifyWord(word) {

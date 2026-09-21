@@ -2,21 +2,41 @@ import { getRandomWord, isValidWord } from "../services/gameService.js";
 import { scoreGuess } from "../utils/wordScoring.js";
 import { saveContextForUser, getContextForUser, clearContextForUser } from "../data/matchContext.js";
 import { saveGame } from "../data/gameData.js";
+import { claimGuestGame, completeGuestGame, hasCompletedGuestGame } from "../data/guests.js";
 
 const Word_LENGTH = 5;
 const MAX_TURNS = 6;
 
 export async function startGame(req, res) {
-  const word = await getRandomWord(req.user.word_length ?? 5, req.user.difficulty ?? 5);
-  saveContextForUser(req.user.id, {
+  
+  const wordLength = req.user?.word_length ?? 5;
+  const difficulty = req.user?.difficulty ?? 5;
+  const word = await getRandomWord(wordLength, difficulty);
+
+  if (req.isGuest) {
+    const completed = await hasCompletedGuestGame(req.playerId);
+
+    if (completed) {
+      return res.status(403).json({
+        error: "Guests can only play once. Create an account to play again.",
+      });
+    }
+    const claimed = await claimGuestGame(req.playerId);
+  }
+
+  saveContextForUser(req.playerId, {
     solution: word.toUpperCase(),
     guesses: [],
   });
-  res.json({ wordLength: req.user.word_length ?? 5, maxTurns: MAX_TURNS});
+
+  res.json({
+    wordLength,
+    maxTurns: MAX_TURNS,
+  });
 }
 
 export async function verifyWord(req, res) {
-  const state = getContextForUser(req.user.id);
+  const state = getContextForUser(req.playerId);
   if (!state) {
     return res
       .status(400)
@@ -42,16 +62,20 @@ export async function verifyWord(req, res) {
   const gameOver = isCorrect || state.guesses.length >= MAX_TURNS;
 
 if (gameOver) {
-  await saveGame({
-    userId: req.user.id,
+  if (req.isGuest) {
+    await completeGuestGame(req.playerId);
+  } else {
+    await saveGame({
+    userId: req.playerId,
     solution: state.solution,
     won: isCorrect,
     guessesUsed: state.guesses.length,
   });
-
-  clearContextForUser(req.user.id);
+  }
+  
+  clearContextForUser(req.playerId);
 } else {
-  saveContextForUser(req.user.id, state);
+  saveContextForUser(req.playerId, state);
 }
 
 return res.json({

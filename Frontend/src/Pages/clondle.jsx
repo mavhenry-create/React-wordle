@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import useWordle from "../hooks/useWordle.jsx";
-import Grid from "./GameBoard/Grid/grid.jsx";
-import Keyboard from "./GameBoard/KeyBoard/keyboard.jsx";
-import GameModal from "./modal/Game/gamemodal.jsx";
-import Card from "./modal/Error/card.jsx";
-
-
+import Grid from "../components/GameBoard/Grid/grid.jsx";
+import Keyboard from "../components/GameBoard/KeyBoard/keyboard.jsx";
+import GameModal from "../components/modal/Game/gamemodal.jsx";
+import Card from "../components/modal/Error/card.jsx";
 
 export default function Wordle() {
   const {
@@ -47,7 +45,7 @@ export default function Wordle() {
         length={wordLength}
       />
       {showModal && <GameModal isCorrect={isCorrect} turn={turn} />}
-      <Keyboard usedKeys={usedKeys} />      
+      <Keyboard usedKeys={usedKeys} />
     </div>
   );
 }
