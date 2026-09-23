@@ -36,7 +36,7 @@ export default function Wordle() {
   }, [handleKeyup, isCorrect, turn]);
 
   return (
-    <div className="">
+    <div className="flex flex-col items-center justify-center min-h-screen w-11/12 mx-auto">
       {error && <Card message={error} />}
       <Grid
         currentGuess={currentGuess}
