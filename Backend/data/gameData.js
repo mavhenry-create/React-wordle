@@ -83,13 +83,15 @@ export async function saveGame({
   solution,
   won,
   guessesUsed,
+  difficulty,
+  wordLength,
 }) {
   const result = await pool.query(
     `INSERT INTO games
-      (user_id, solution, won, guesses_used)
-     VALUES ($1, $2, $3, $4)
+      (user_id, solution, won, guesses_used, difficulty, word_length)
+     VALUES ($1, $2, $3, $4, $5, $6)
      RETURNING *`,
-    [userId, solution, won, guessesUsed],
+    [userId, solution, won, guessesUsed, difficulty, wordLength],
   );
 
   return result.rows[0];

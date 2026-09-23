@@ -1,14 +1,41 @@
 .keyboard .grey {
-    background: #a1a1a1;
-    border-color: #a1a1a1;
+    --background: #a1a1a1;
+    --border-color: #a1a1a1;
+    animation: keyPress 0.2s ease-in-out forwards;
 }
 
 .keyboard .yellow {
-    background: #e2cc68;
-    border-color: #e2cc68;
+    --background: #e2cc68;
+    --border-color: #e2cc68;
+    animation: keyPress 0.2s ease-in-out forwards;
 }
 
 .keyboard .green {
-    background: #5ac85a;
-    border-color: #5ac85a;
+    --background: #5ac85a;
+    --border-color: #5ac85a;
+    animation: keyPress 0.2s ease-in-out forwards;
+}
+
+@keyframes keyPress {
+    0% {
+        transform: scale(1);
+        background: #fff;
+        border-color: #333;
+    }
+    45% {
+        transform: scale(0.95);
+        background: #fff;
+        border-color: #333;
+    }
+    55% {
+        transform: scale(0.9);
+        background: #fff;
+        border-color: #333;
+    }
+    100% {
+        transform: scale(1);
+        background: var(--background);
+        border-color: var(--border-color);
+        
+    }
 }

@@ -33,3 +33,26 @@ export async function updateUserSettings(difficulty, wordLength) {
 
     return data;
 }
+
+export async function changeOrUpdateUserName(newUserName, confirmNewUserName) {
+    if (newUserName !== confirmNewUserName) {
+        throw new Error("Username confirmation does not match");
+    }
+    const response = await fetch("http://localhost:3000/api/auth/username", {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ newUserName }),
+    });
+
+    
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw new Error(data.message || "Failed to update username");
+    }
+
+    return data;
+}

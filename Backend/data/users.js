@@ -47,10 +47,10 @@ export async function findOrCreateUser(auth0User) {
 }
 
 
-export async function changeOrUpdateUserName(userId, newUsername) {
+export async function changeOrUpdateUserName(userId, newUserName) {
   const result = await pool.query(
     "UPDATE users SET username = $1, updated_at = NOW() WHERE id = $2 RETURNING *",
-    [newUsername, userId]
+    [newUserName, userId]
   );
   return result.rows[0];
 }
@@ -59,6 +59,15 @@ export async function updateUserSettings(userId, { difficulty , wordLength }) {
   const result = await pool.query(
     "UPDATE users SET difficulty = $1, word_length = $2, updated_at = NOW() WHERE id = $3 RETURNING *",
     [difficulty, wordLength, userId]
+  );
+  return result.rows[0];
+}
+
+
+export async function deleteUser(userId) {
+  const result = await pool.query(
+    "DELETE FROM users WHERE id = $1 RETURNING *",
+    [userId]
   );
   return result.rows[0];
 }

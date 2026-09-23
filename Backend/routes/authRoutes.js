@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { findOrCreateUser, updateUserSettings } from "../data/users.js";
+import { findOrCreateUser, updateUserSettings, changeOrUpdateUserName } from "../data/users.js";
 import { getUserStats } from "../data/gameData.js";
 import { requireUser } from "../middleware/authentication.js";
 const router = Router();
@@ -27,6 +27,14 @@ router.patch("/settings", requireUser, async (req, res) => {
   const { difficulty, wordLength } = req.body;
   const user = await updateUserSettings(req.user.id, { difficulty, wordLength });
   return res.json({ user });
-})
+});
+
+router.patch("/username", requireUser, async (req, res) => {
+  const { newUserName } = req.body;
+  const user = await changeOrUpdateUserName(req.user.id, newUserName);
+  return res.json({ user });
+});
+
+
 
 export default router;

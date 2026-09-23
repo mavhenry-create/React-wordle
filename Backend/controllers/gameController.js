@@ -21,12 +21,14 @@ export async function startGame(req, res) {
         error: "Guests can only play once. Create an account to play again.",
       });
     }
-    const claimed = await claimGuestGame(req.playerId);
+    
   }
 
   saveContextForUser(req.playerId, {
     solution: word.toUpperCase(),
     guesses: [],
+    difficulty,
+    wordLength,
   });
 
   res.json({
@@ -70,6 +72,8 @@ if (gameOver) {
     solution: state.solution,
     won: isCorrect,
     guessesUsed: state.guesses.length,
+    difficulty: state.difficulty,
+    wordLength: state.wordLength,
   });
   }
   

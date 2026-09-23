@@ -53,6 +53,7 @@ export default function Settings({difficulty, wordLength: initialWordLength, onS
                     id="Wordlength"
                     min="5"
                     max="10"
+                    defaultValue={wordLength}
                     className='mt-2 p-2 w-15 text-center border border-gray-300 rounded'
                     value={wordLength}
                     onChange={(e) => setWordLength(Number(e.target.value))}

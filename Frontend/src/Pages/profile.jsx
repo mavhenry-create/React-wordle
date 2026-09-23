@@ -42,6 +42,7 @@ export default function Profile() {
 
             <p>Boards Completed: {profile.stats.wins}</p>
             <p>Current Difficulty: {profile.user.difficulty}</p>
+            <p>Word Length: {profile.user.wordLength}</p>
           </div>
 
           <div className="profile-stats w-1/3 p-14 bg-white border border-gray-300 text-center rounded-lg box-shadow-md shadow-lg">
@@ -92,30 +93,30 @@ export default function Profile() {
             <form className="flex flex-col items-center">
               <h4 className="font-bold text-lg mb-4">Update Username</h4>
               <label htmlFor="displayName" text="New Username">
-                New Username
+                New Display Name
               </label>
               <input
                 type="text"
                 id="displayName"
                 name="displayName"
                 className="border border-gray-300 p-2 rounded mb-4"
-                placeholder="New Username"
+                placeholder="New Display Name"
               />
-              <label htmlFor="confirmDisplayName" text="Confirm Username">
-                Confirm Username
+              <label htmlFor="confirmDisplayName" text="Confirm Display Name">
+                Confirm Display Name
               </label>
               <input
                 type="text"
                 id="confirmDisplayName"
                 name="confirmDisplayName"
                 className="border border-gray-300 p-2 rounded mb-4"
-                placeholder="Confirm Username"
+                placeholder="Confirm Display Name"
               />
               <button
                 type="submit"
                 className="bg-gray-800 text-white p-2 rounded"
               >
-                Update User Name
+                Update Display Name
               </button>
             </form>
             <hr className="my-4 w-1/3 border-t border-gray-300" />

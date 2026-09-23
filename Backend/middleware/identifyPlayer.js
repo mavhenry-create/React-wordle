@@ -6,7 +6,9 @@ export async function identifyPlayer(req, res, next) {
 
     if (session) {
         const auth0User = await req.auth0.client.getUser();
-        req.playerId = (await findOrCreateUser(auth0User)).id;
+        const user = await findOrCreateUser(auth0User);
+        req.playerId = user.id;
+        req.user = user;
         req.isGuest = false;
         return next();
     }

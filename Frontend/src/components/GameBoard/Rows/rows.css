@@ -53,6 +53,7 @@
 }
 
 .row.current > div.filled {
+    margin: 0 1.7px;
     animation: bounce 0.2s ease-in-out forwards;
 }
 
