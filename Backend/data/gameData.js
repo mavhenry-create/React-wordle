@@ -73,9 +73,81 @@ export async function getUserStats(userId) {
     [userId],
   );
 
-  const streak = await getStreak(userId);
+  const [streak, hardestWord, longestWord, byDifficulty, byWordLength] = await Promise.all([
+    getStreak(userId),
+    getHardestWordSolved(userId),
+    getLongestWordSolved(userId),
+    getStatsByDifficulty(userId),
+    getStatsByWordLength(userId),
+  ]);
 
-  return { ...result.rows[0], streak };
+  return {
+    ...result.rows[0],
+    streak,
+    hardestWord,
+    longestWord,
+    byDifficulty,
+    byWordLength,
+  };
+}
+
+export async function getHardestWordSolved(userId) {
+  const result = await pool.query(
+    `SELECT solution, difficulty, word_length
+     FROM games
+     WHERE user_id = $1 AND won = TRUE
+     ORDER BY difficulty DESC, word_length DESC, played_at DESC
+     LIMIT 1`,
+    [userId],
+  );
+  return result.rows[0];
+}
+
+
+export async function getLongestWordSolved(userId) {
+  const result = await pool.query(
+    `SELECT solution, difficulty, word_length
+     FROM games
+     WHERE user_id = $1 AND won = TRUE
+     ORDER BY word_length DESC, difficulty DESC, played_at DESC
+     LIMIT 1`,
+    [userId],
+  );
+  return result.rows[0];
+}
+
+export async function getStatsByDifficulty(userId) {
+  const result = await pool.query(
+    `SELECT
+       difficulty,
+       COUNT(*)::int AS games_played,
+       COUNT(*) FILTER (WHERE won = TRUE)::int AS wins,
+       COALESCE(SUM(guesses_used), 0)::int AS total_guesses
+     FROM games
+     WHERE user_id = $1
+     GROUP BY difficulty
+     ORDER BY difficulty`,
+    [userId],
+  );
+
+  return result.rows;
+}
+
+export async function getStatsByWordLength(userId) {
+  const result = await pool.query(
+    `SELECT
+       word_length,
+       COUNT(*)::int AS games_played,
+       COUNT(*) FILTER (WHERE won = TRUE)::int AS wins,
+       COALESCE(AVG(guesses_used) FILTER (WHERE won = TRUE), 0)::numeric(10,2) AS avg_guesses
+     FROM games
+     WHERE user_id = $1
+     GROUP BY word_length
+     ORDER BY word_length`,
+    [userId],
+  );
+
+  return result.rows;
 }
 
 export async function saveGame({

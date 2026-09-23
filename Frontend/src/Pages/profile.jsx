@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getCurrentUser, updateUserSettings } from "../services/authAPI.js";
 import Card from "../components/modal/Error/card.jsx";
 import Settings from "../components/modal/Profile/settings.jsx";
+import Stats from "../components/Profile-stats/stats.jsx";
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
@@ -43,19 +44,9 @@ export default function Profile() {
             <p>Boards Completed: {profile.stats.wins}</p>
             <p>Current Difficulty: {profile.user.difficulty}</p>
             <p>Word Length: {profile.user.wordLength}</p>
-          </div>
-
-          <div className="profile-stats w-1/3 p-14 bg-white border border-gray-300 text-center rounded-lg box-shadow-md shadow-lg">
-            <h2 className="font-bold text-2xl mb-4">Statistics</h2>
-
-            <p>Games played: {profile.stats.games_played}</p>
-            <hr className="my-4 w-full border-t border-gray-300" />
-            <p>Total guesses: {profile.stats.total_guesses}</p>
-            <hr className="my-4 w-full border-t border-gray-300" />
-            <p>
-              Current streak: {profile.stats.streak ? profile.stats.streak : 0}
-            </p>
-          </div>
+          </div>          
+            <Stats stats={profile.stats} />
+          
         </div>
 
         <div className="settings mt-10 flex justify-center items-center position-relative">
