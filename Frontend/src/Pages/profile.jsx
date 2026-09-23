@@ -3,6 +3,7 @@ import { getCurrentUser, updateUserSettings } from "../services/authAPI.js";
 import Card from "../components/modal/Error/card.jsx";
 import Settings from "../components/modal/Profile/settings.jsx";
 import Stats from "../components/Profile-stats/stats.jsx";
+import { DIFFICULTIES } from "../constants/difficulty.js";
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
@@ -42,8 +43,8 @@ export default function Profile() {
             <hr className="my-4 w-full border-t border-gray-300" />
 
             <p>Boards Completed: {profile.stats.wins}</p>
-            <p>Current Difficulty: {profile.user.difficulty}</p>
-            <p>Word Length: {profile.user.wordLength}</p>
+            <p>Current Difficulty: {DIFFICULTIES[profile.user.difficulty]}</p>
+            <p>Word Length: {profile.user.word_length}</p>
           </div>          
             <Stats stats={profile.stats} />
           
@@ -52,7 +53,7 @@ export default function Profile() {
         <div className="settings mt-10 flex justify-center items-center position-relative">
           <Settings
             difficulty={profile.user.difficulty}
-            wordLength={profile.user.wordLength}
+            wordLength={profile.user.word_length}
             onSave={async (newDifficulty, newWordLength) => {
               try {
                 await updateUserSettings(newDifficulty, newWordLength);
@@ -61,7 +62,7 @@ export default function Profile() {
                   user: {
                     ...prev.user,
                     difficulty: newDifficulty,
-                    wordLength: newWordLength,
+                    word_length: newWordLength,
                   },
                 }));
               } catch (err) {
@@ -79,7 +80,7 @@ export default function Profile() {
           </button>
         </div>
         {showUserSettings && (
-          <div className="user-settings-container flex flex-col justify-center items-center mt-5  bg-white border border-gray-300 p-4 rounded-lg box-shadow-md shadow-lg  ">
+          <div className="user-settings-container flex flex-col justify-center items-center mt-5 w-1/2 mx-auto bg-white border border-gray-300 p-4 rounded-lg box-shadow-md shadow-lg  ">
             <h3 className="font-bold text-xl mb-4">User Settings</h3>
             <form className="flex flex-col items-center">
               <h4 className="font-bold text-lg mb-4">Update Username</h4>

@@ -1,6 +1,6 @@
 import { useState } from "react";
-
-const TABS = ["Overview", "By Difficulty", "By Word Length", "Records"];
+import { DIFFICULTIES } from "../../constants/difficulty.js";
+const TABS = ["Overview", "By Difficulty", "By Word Length"];
 
 export default function Stats({ stats }) {
   const [activeTab, setActiveTab] = useState(TABS[0]);
@@ -14,7 +14,7 @@ export default function Stats({ stats }) {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={activeTab === tab ? "font-bold underline" : ""}
+            className={activeTab === tab ? "underline bg-gray-800 text-white p-2 rounded hover:bg-gray-700" : "bg-gray-800 text-white p-2 rounded hover:bg-gray-700"}
           >
             {tab}
           </button>
@@ -23,20 +23,20 @@ export default function Stats({ stats }) {
       </div>
         <hr className='w-full border-t border-gray-300'/>
       {activeTab === "Overview" && (
-        <div>
-          <p className="mb-2">Games played: {stats.games_played}</p>
-          <p className="mb-2">Wins: {stats.wins}</p>
-          <p className="mb-2">Total guesses: {stats.total_guesses}</p>
-          <p className="mb-2"   >Streak: {stats.streak}</p>
+        <div className="overview-tab">
+          <p className="m-2">Games played: {stats.games_played}</p>
+          <p className="m-2">Boards Completed: {stats.wins}</p>
+          <p className="m-2">Total guesses: {stats.total_guesses}</p>
+          <p className="m-2"   >Streak: {stats.streak}</p>
         </div>
       )}
 
       {activeTab === "By Difficulty" && (
-        <table>
+        <table className="m-4">
           <tbody>
             {stats.byDifficulty.map((row) => (
               <tr key={row.difficulty}>
-                <td>Difficulty {row.difficulty}</td>
+                <td>{DIFFICULTIES[row.difficulty]}</td>
                 <td>{row.wins}/{row.games_played} wins</td>
               </tr>
             ))}
@@ -45,7 +45,7 @@ export default function Stats({ stats }) {
       )}
 
       {activeTab === "By Word Length" && (
-        <table>
+        <table className="m-4">
           <tbody>
             {stats.byWordLength.map((row) => (
               <tr key={row.word_length}>
@@ -58,12 +58,7 @@ export default function Stats({ stats }) {
         </table>
       )}
 
-      {activeTab === "Records" && (
-        <div>
-          <p>Hardest word solved: {stats.hardestWord?.solution ?? "—"}</p>
-          <p>Longest word solved: {stats.longestWord?.solution ?? "—"}</p>
-        </div>
-      )}
+
     </div>
   );
 }

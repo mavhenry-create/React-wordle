@@ -51,9 +51,9 @@ function App() {
   }, [alertMessage]);
   return (
     <>
-      <div className="app-container min-h-screen overflow-x-hidden">
+      <div className="app-container min-h-screen max-w-screen overflow-x-hidden">
         <Navbar />
-        <div className="main-content">
+        <div className="main-content w-11/12 align-center mx-auto">
           {alertMessage && (
             <Card message={alertMessage.message} type={alertMessage.type} />
           )}
