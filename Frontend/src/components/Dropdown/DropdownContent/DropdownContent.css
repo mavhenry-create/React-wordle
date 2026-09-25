@@ -16,6 +16,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     opacity: 0;
+    z-index: 11;
     transform: translateY(-5%);
     transition: transform 150ms ease-in-out,
                 opacity 150ms ease-in-out;

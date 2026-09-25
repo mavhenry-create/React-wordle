@@ -37,7 +37,7 @@ export default function Keyboard({ usedKeys }) {
   ];
 
   return (
-    <div className="keyboard flex flex-col items-center justify-center gap-1">
+    <div className="keyboard flex flex-col items-center justify-center gap-0.5 mb-5">
       {letters.map((row, i) => (
         <div key={i} className="flex gap-1">
           {row.map(({ key }) => {
@@ -45,7 +45,7 @@ export default function Keyboard({ usedKeys }) {
             return (
               <div
                 key={key}
-                className={` ${color} w-10 h-10 shrink-0 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase`}
+                className={` ${color} w-10 h-10 shrink-0 border border-gray-300 flex justify-center items-center mt-1 text-2xl font-bold uppercase 2xl:w-15 2xl:h-15 1xl:w-12 1xl:h-12 lg:w-10 lg:h-10 md:w-8 md:h-8 sm:w-6 sm:h-6`}
               >
                 {key}
               </div>

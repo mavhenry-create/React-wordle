@@ -21,7 +21,7 @@ export async function startGame(req, res) {
         error: "Guests can only play once. Create an account to play again.",
       });
     }
-    
+    await claimGuestGame(req.playerId);
   }
 
   saveContextForUser(req.playerId, {

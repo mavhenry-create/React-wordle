@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { findOrCreateUser, updateUserSettings, changeOrUpdateUserName } from "../data/users.js";
+import { body } from "express-validator";
+import { findOrCreateUser, updateUserSettings, changeOrUpdateUserName, deleteUser } from "../data/users.js";
 import { getUserStats } from "../data/gameData.js";
 import { requireUser } from "../middleware/authentication.js";
+import { validate } from "../middleware/validate.js";
+
 const router = Router();
 
 router.get("/profile", async (req, res) => {
@@ -9,7 +12,7 @@ router.get("/profile", async (req, res) => {
     const session = await req.auth0.client.getSession();
 
     if (!session) {
-      return res.status(401).json({ message: "Login required" });
+      return res.json({ user: null, isGuest: true });
     }
 
     const auth0User = await req.auth0.client.getUser();
@@ -29,12 +32,21 @@ router.patch("/settings", requireUser, async (req, res) => {
   return res.json({ user });
 });
 
-router.patch("/username", requireUser, async (req, res) => {
+router.patch("/username", requireUser, validate([
+  body("newUserName").trim()
+  .isLength({ min: 3 })
+  .withMessage("Username must be at least 3 characters long")
+  .matches(/^[a-zA-Z0-9_]+$/)
+  .withMessage("Username can only contain letters, numbers, and underscores")
+]), async (req, res) => {
   const { newUserName } = req.body;
   const user = await changeOrUpdateUserName(req.user.id, newUserName);
   return res.json({ user });
 });
 
-
+router.delete("/account", requireUser, async (req, res) => {
+  await deleteUser(req.user.id);
+  return res.json({success: true});
+});
 
 export default router;

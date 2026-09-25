@@ -15,12 +15,12 @@ export default function Settings({difficulty, wordLength: initialWordLength, onS
 
     return (
         <>
-        <button onClick={() => setSettings((prev) => !prev)} className='mt-5 p-2 bg-gray-800 text-white rounded hover:bg-gray-600'>
+        <button type="button" onClick={() => setSettings((prev) => !prev)} className='mt-5 p-2 bg-gray-800 text-white rounded hover:bg-gray-600 hover:cursor-pointer'>
             {settings ? "Game Settings" : "Game Settings"}
         </button>
         {settings && (
         <div className="settings-container">   
-            <div className="p-5 flex flex-col justify-center items-center">
+            <div className="p-5 flex flex-col justify-center items-center" role="dialog" aria-label="Game Settings" aria-modal="true">
                 <h2 className='font-bold text-xl'>Game Settings</h2>
                 <hr className='w-full border-t border-gray-300 my-4' />
                 <details>
@@ -53,12 +53,11 @@ export default function Settings({difficulty, wordLength: initialWordLength, onS
                     id="Wordlength"
                     min="5"
                     max="10"
-                    defaultValue={wordLength}
                     className='mt-2 p-2 w-15 text-center border border-gray-300 rounded'
                     value={wordLength}
                     onChange={(e) => setWordLength(Number(e.target.value))}
                 />
-                <button onClick={saveSettings} className='mt-5 p-2 bg-gray-800 text-white rounded hover:bg-gray-600'>Save Settings</button>
+                <button type="button" onClick={saveSettings} className='mt-5 p-2 bg-gray-800 text-white rounded hover:bg-gray-600 hover:cursor-pointer'>Save Settings</button>
             </div>
             
         </div>

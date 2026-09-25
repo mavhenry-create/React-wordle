@@ -1,16 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../services/authAPI.js";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useEffect, useState } from "react";
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    getCurrentUser()
-      .then(({ user }) => setUser(user))
-      .catch(() => setUser(null));
-  }, []);
+  
 
   return (
     <div className="flex flex-col gap-3 min-h-screen items-center justify-center bg-gray-800">

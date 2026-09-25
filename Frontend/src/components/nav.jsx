@@ -1,37 +1,30 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../services/authAPI";
+import { useAuth } from "../context/AuthContext.jsx";
 import Dropdown from "./Dropdown/Dropdown.jsx";
 
 
 
 
 function Navbar() {
-  const [user, setUser] = useState(null);
+  const { user, login, logout } = useAuth();
   const navigate = useNavigate();
   
-  useEffect(() => {
-    getCurrentUser()
-      .then(({ user }) => setUser(user))
-      .catch(() => setUser(null));
-  }, []);
 
   const handleLogin = () => {
     sessionStorage.setItem("authAction", "login")
-    window.location.href =
-      "http://localhost:3000/auth/login?returnTo=http://localhost:5173/";
+    login();
   };
 
   const handleSignup = () => {
-    sessionStorage.setItem("authAction", "login")
+    sessionStorage.setItem("authAction", "signup")
     window.location.href =
       "http://localhost:3000/auth/login?screen_hint=signup&returnTo=http://localhost:5173/";
   };
 
   const handleLogout = () => {
     sessionStorage.setItem("authAction", "logout");
-    window.location.href =
-      "http://localhost:3000/auth/logout?returnTo=http://localhost:5173/";
+    logout();
   };
 
   return (

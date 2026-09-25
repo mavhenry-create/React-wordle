@@ -36,7 +36,8 @@ export default function Wordle() {
   }, [handleKeyup, isCorrect, turn]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-11/12 mx-auto">
+    <div className="flex flex-col items-center justify-center h-11/12 w-11/12 mx-auto" role='region' aria-label='Clondle game board'
+    >
       {error && <Card message={error} />}
       <Grid
         currentGuess={currentGuess}
@@ -47,5 +48,6 @@ export default function Wordle() {
       {showModal && <GameModal isCorrect={isCorrect} turn={turn} />}
       <Keyboard usedKeys={usedKeys} />
     </div>
+    
   );
 }

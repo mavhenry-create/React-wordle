@@ -56,3 +56,18 @@ export async function changeOrUpdateUserName(newUserName, confirmNewUserName) {
 
     return data;
 }
+
+export async function deleteAccount() {
+  const response = await fetch("http://localhost:3000/api/auth/account", {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete account");
+  }
+
+  return data;
+}
