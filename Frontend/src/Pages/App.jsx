@@ -21,7 +21,8 @@ function App() {
     }
 
     refrestUser()
-      .then(({ user }) => {
+      .then(({user}) => {
+        
         if (authAction === "login") {
           setAlertMessage({
             type: "success",

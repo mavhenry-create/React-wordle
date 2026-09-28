@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getCurrentUser, updateUserSettings, deleteAccount, changeOrUpdateUserName } from "../services/authAPI.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import Card from "../components/modal/Error/card.jsx";
@@ -13,6 +14,7 @@ export default function Profile() {
   const [alertMessage, setAlertMessage] = useState("");
   const [newUserName, setNewUserName] = useState("");
   const [confirmUserName, setConfirmUserName] = useState("");
+  const navigate = useNavigate();
   const { logout } = useAuth();
 
   useEffect(() => {
@@ -37,6 +39,8 @@ export default function Profile() {
     await changeOrUpdateUserName(newUserName, confirmUserName);
     setProfile((prev) => ({ ...prev, user: { ...prev.user, username: newUserName } }));
     setAlertMessage("Username updated successfully.");
+    navigate(0);
+    
   } catch (err) {
     setError(err.message);
   }

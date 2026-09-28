@@ -9,10 +9,17 @@ export function AuthProvider({ children}) {
 
   const refrestUser = useCallback(async () => {
     setLoading(true);
-    return getCurrentUser()
-    .then(({ user }) => setUser(user))
-    .catch(() => setUser(null))
-    .finally(() => setLoading(false));
+    try {
+      const data = await getCurrentUser();
+      setUser(data.user);
+      return data;
+    } catch (error) {
+      console.error("Failed to refresh user:", error);
+      setUser(null);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
 

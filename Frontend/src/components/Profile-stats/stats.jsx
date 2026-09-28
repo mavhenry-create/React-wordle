@@ -37,7 +37,7 @@ export default function Stats({ stats }) {
             {stats.byDifficulty.map((row) => (
               <tr key={row.difficulty} className="text-center">               
                 <td className="text-left mx-auto font-semibold text-lg">{DIFFICULTIES[row.difficulty]}</td>
-                <td className="text-lg font-bold">{row.wins}/{row.games_played} wins</td>
+                <td className="text-lg font-bold">{row.wins}/{row.games_played} completions</td>
               </tr>
             ))}
           </tbody>
@@ -50,7 +50,7 @@ export default function Stats({ stats }) {
             {stats.byWordLength.map((row) => (
               <tr className='' key={row.word_length}>
                 <td className="p-1 font-bold">{row.word_length} letters</td>
-                <td className="p-1 font-bold ">{row.wins}/{row.games_played} wins</td>
+                <td className="p-1 font-bold ">{row.wins}/{row.games_played} completions</td>
                 <td className="p-1 font-bold">avg {row.avg_guesses} guesses</td>
               </tr>
             ))}
