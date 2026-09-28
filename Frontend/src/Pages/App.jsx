@@ -79,7 +79,7 @@ function App() {
         </main>
       
         <footer className="app-footer bg-gray-800 text-white p-0.5 text-center">
-        &copy; {new Date().getFullYear()} Clondle. All rights reserved.
+        {new Date().getFullYear()} Clondle Made by Maverick .
         </footer>
       </div>  
     </>

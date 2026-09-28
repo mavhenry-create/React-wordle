@@ -1,18 +1,21 @@
 import { getRandomWord, isValidWord } from "../services/gameService.js";
 import { scoreGuess } from "../utils/wordScoring.js";
-import { saveContextForUser, getContextForUser, clearContextForUser } from "../data/matchContext.js";
+import {
+  saveContextForUser,
+  getContextForUser,
+  clearContextForUser,
+} from "../data/matchContext.js";
 import { saveGame } from "../data/gameData.js";
-import { claimGuestGame, completeGuestGame, hasCompletedGuestGame } from "../data/guests.js";
+import {
+  claimGuestGame,
+  completeGuestGame,
+  hasCompletedGuestGame,
+} from "../data/guests.js";
 
 const Word_LENGTH = 5;
 const MAX_TURNS = 6;
 
 export async function startGame(req, res) {
-  
-  const wordLength = req.user?.word_length ?? 5;
-  const difficulty = req.user?.difficulty ?? 5;
-  const word = await getRandomWord(wordLength, difficulty);
-
   if (req.isGuest) {
     const completed = await hasCompletedGuestGame(req.playerId);
 
@@ -23,6 +26,10 @@ export async function startGame(req, res) {
     }
     await claimGuestGame(req.playerId);
   }
+
+  const wordLength = req.user?.word_length ?? 5;
+  const difficulty = req.user?.difficulty ?? 5;
+  const word = await getRandomWord(wordLength, difficulty);
 
   saveContextForUser(req.playerId, {
     solution: word.toUpperCase(),
@@ -63,31 +70,30 @@ export async function verifyWord(req, res) {
   const isCorrect = word.toUpperCase() === state.solution;
   const gameOver = isCorrect || state.guesses.length >= MAX_TURNS;
 
-if (gameOver) {
-  if (req.isGuest) {
-    await completeGuestGame(req.playerId);
+  if (gameOver) {
+    if (req.isGuest) {
+      await completeGuestGame(req.playerId);
+    } else {
+      await saveGame({
+        userId: req.playerId,
+        solution: state.solution,
+        won: isCorrect,
+        guessesUsed: state.guesses.length,
+        difficulty: state.difficulty,
+        wordLength: state.wordLength,
+      });
+    }
+
+    clearContextForUser(req.playerId);
   } else {
-    await saveGame({
-    userId: req.playerId,
-    solution: state.solution,
-    won: isCorrect,
-    guessesUsed: state.guesses.length,
-    difficulty: state.difficulty,
-    wordLength: state.wordLength,
-  });
+    saveContextForUser(req.playerId, state);
   }
-  
-  clearContextForUser(req.playerId);
-} else {
-  saveContextForUser(req.playerId, state);
-}
 
-return res.json({
-  guess,
-  turn: state.guesses.length,
-  isCorrect,
-  gameOver,
-  ...(gameOver ? { correctWord: state.solution } : {}),
-});
-
+  return res.json({
+    guess,
+    turn: state.guesses.length,
+    isCorrect,
+    gameOver,
+    ...(gameOver ? { correctWord: state.solution } : {}),
+  });
 }

@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "clondle backend",
   "version": "1.0.0",
   "description": "Backend for react app",
   "main": "server.js",
@@ -8,7 +8,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "keywords": [],
+  "keywords": ["auth0", "express", "rate-limit", "helmet"],
   "author": "Maverick Henry",
   "license": "ISC",
   "type": "module",
@@ -18,7 +18,9 @@
     "cors": "^2.8.6",
     "crypto": "^1.0.1",
     "express": "^5.2.1",
-    "express-validator": "^7.3.2"
+    "express-rate-limit": "^8.7.0",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.3.0"
   },
   "devDependencies": {
     "dotenv": "^17.4.2",

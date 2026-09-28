@@ -43,7 +43,7 @@ function Navbar() {
             <>
               <button
                 onClick={() => navigate("/profile")}
-                className="hover:bg-blue-100 p-2"
+                className="hover:bg-blue-100 p-2 hover:cursor-pointer"
               >
                 Profile
               </button>
@@ -52,7 +52,7 @@ function Navbar() {
 
               <button
                 onClick={handleLogout}
-                className="hover:bg-blue-100 p-2"
+                className="hover:bg-blue-100 p-2 hover:cursor-pointer"
               >
                 Logout
               </button>
@@ -66,14 +66,14 @@ function Navbar() {
             <>
               <button
                 onClick={handleLogin}
-                className="hover:bg-blue-100 p-2"
+                className="hover:bg-blue-100 p-2 hover:cursor-pointer"
               >
                 Login
               </button>
 
               <button
                 onClick={handleSignup}
-                className="hover:bg-blue-100 p-2"
+                className="hover:bg-blue-100 p-2 hover:cursor-pointer"
               >
                 Register
               </button>

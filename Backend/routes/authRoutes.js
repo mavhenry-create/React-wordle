@@ -26,7 +26,10 @@ router.get("/profile", async (req, res) => {
   }
 });
 
-router.patch("/settings", requireUser, async (req, res) => {
+router.patch("/settings", requireUser, validate([
+  body("difficulty").isInt({ min: 1, max: 5 }).withMessage("Difficulty must be between 1 and 5"),
+  body("wordLength").isInt({ min: 5, max: 10 }).withMessage("Word length must be between 5 and 10")
+]), async (req, res) => {
   const { difficulty, wordLength } = req.body;
   const user = await updateUserSettings(req.user.id, { difficulty, wordLength });
   return res.json({ user });

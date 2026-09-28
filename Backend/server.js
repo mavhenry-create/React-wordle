@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { createAuth0 } from '@auth0/auth0-express';
@@ -18,7 +19,7 @@ app.use(createAuth0({
   sessionSecret: process.env.AUTH0_SESSION_SECRET,
   appBaseUrl: process.env.APP_BASE_URL
 }));
-
+app.use(helmet());
 app.use(cookieParser());
 
 app.use(cors({ origin: "http://localhost:5173",

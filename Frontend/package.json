@@ -1,7 +1,7 @@
 {
-  "name": "auth",
+  "name": "Clondle",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "proxy": "http://localhost:3000",
   "type": "module",
   "scripts": {
