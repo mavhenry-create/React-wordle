@@ -28,11 +28,11 @@ export function AuthProvider({ children}) {
   }, [refrestUser]);
 
   const login = () => {
-    window.location.href = "http://localhost:3000/auth/login?returnTo=http://localhost:5173/";
+    window.location.href = `/auth/login?returnTo=${encodeURIComponent(window.location.origin + "/")}`;
   };
 
   const logout = () => {
-    window.location.href = "http://localhost:3000/auth/logout?returnTo=http://localhost:5173/";
+    window.location.href = `/auth/logout?returnTo=${encodeURIComponent(window.location.origin + "/")}`;
   };
 
 

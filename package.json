@@ -1,0 +1,9 @@
+{
+  "name": "clondle",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix Backend && npm install --prefix Frontend",
+    "build": "npm run install:all && npm run build --prefix Frontend",
+    "start": "npm start --prefix Backend"
+  }
+}

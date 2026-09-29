@@ -1,7 +1,7 @@
 const API_BASE = '/api/auth';
 
 export async function getCurrentUser() {
-  const response = await fetch("http://localhost:3000/api/auth/profile", {
+  const response = await fetch(`${API_BASE}/profile`, {
     credentials: "include",
   });
 
@@ -16,7 +16,7 @@ export async function getCurrentUser() {
 
 
 export async function updateUserSettings(difficulty, wordLength) {
-    const response = await fetch("http://localhost:3000/api/auth/settings", {
+    const response = await fetch(`${API_BASE}/settings`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export async function changeOrUpdateUserName(newUserName, confirmNewUserName) {
     if (newUserName !== confirmNewUserName) {
         throw new Error("Username confirmation does not match");
     }
-    const response = await fetch("http://localhost:3000/api/auth/username", {
+    const response = await fetch(`${API_BASE}/username`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export async function changeOrUpdateUserName(newUserName, confirmNewUserName) {
 }
 
 export async function deleteAccount() {
-  const response = await fetch("http://localhost:3000/api/auth/account", {
+  const response = await fetch(`${API_BASE}/account`, {
     method: "DELETE",
     credentials: "include",
   });
