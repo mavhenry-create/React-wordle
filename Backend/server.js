@@ -2,32 +2,41 @@ import express from "express";
 import "dotenv/config";
 import helmet from "helmet";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
-import { createAuth0 } from '@auth0/auth0-express';
+import { createAuth0 } from "@auth0/auth0-express";
 import authRoutes from "./routes/authRoutes.js";
 import gameRoutes from "./routes/gameRoutes.js";
 
-
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const frontendDist = path.join(__dirname, "../Frontend/dist");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(createAuth0({
-  domain: process.env.AUTH0_DOMAIN,
-  clientId: process.env.AUTH0_CLIENT_ID,
-  clientSecret: process.env.AUTH0_CLIENT_SECRET,
-  sessionSecret: process.env.AUTH0_SESSION_SECRET,
-  appBaseUrl: process.env.APP_BASE_URL
-}));
+app.use(
+  createAuth0({
+    domain: process.env.AUTH0_DOMAIN,
+    clientId: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    sessionSecret: process.env.AUTH0_SESSION_SECRET,
+    appBaseUrl: process.env.APP_BASE_URL,
+  }),
+);
 app.use(helmet());
 app.use(cookieParser());
 
-app.use(cors({ origin: "http://localhost:5173",
-    credentials: true, }));
+app.use(cors({
+  origin: process.env.NODE_ENV === "production" ? true : "http://localhost:5173",
+  credentials: true,
+}));
+
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.redirect("http://localhost:5173/clondle");
+app.use(express.static(frontendDist));
+
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(frontendDist, "index.html"));
 });
 
 app.get("/api", (req, res) => {
