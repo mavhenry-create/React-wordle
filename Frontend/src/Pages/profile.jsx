@@ -115,7 +115,7 @@ export default function Profile() {
             <h3 className="font-bold text-xl mb-4">User Settings</h3>
             <hr className="w-1/3 border-t border-gray-300" />
             <form className="flex flex-col items-center" onSubmit={handleUsernameSubmit}>
-              <h4 className="font-bold text-lg mb-4">Update Username</h4>
+              <h4 className="font-bold text-lg my-4">Update Username</h4>
               <input
                 type="text"
                 id="newUserName"
@@ -138,7 +138,7 @@ export default function Profile() {
                 type="submit"
                 className="bg-gray-800 text-white p-2 rounded hover:cursor-pointer hover:bg-gray-700"
               >
-                Update Username
+                Save Changes
               </button>
             </form>
             <hr className="my-4 w-1/3 border-t border-gray-300" />
@@ -149,7 +149,7 @@ export default function Profile() {
             </p>
             <button
               type="button"
-              className="bg-red-600 text-white p-2 rounded mt-2"
+              className="bg-red-600 text-white p-2 rounded mt-2 hover:cursor-pointer hover:bg-red-700"
               onClick={handleDeleteAccount}
             >
               Delete Account

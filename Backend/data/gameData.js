@@ -37,24 +37,24 @@ export async function getTotalGuesses(userId) {
 
 export async function getStreak(userId) {
   const result = await pool.query(
-    `WITH play_days AS (
-       SELECT DISTINCT played_at::date AS play_date
+    `WITH win_days AS (
+       SELECT DISTINCT played_at::date AS win_date
        FROM games
-       WHERE user_id = $1
+       WHERE user_id = $1 AND won = TRUE
      ),
      grouped AS (
-       SELECT play_date,
-              play_date - (ROW_NUMBER() OVER (ORDER BY play_date DESC))::int
+       SELECT win_date,
+              win_date - (ROW_NUMBER() OVER (ORDER BY win_date ASC))::int
                 * INTERVAL '1 day' AS grp
-       FROM play_days
-       WHERE play_date <= CURRENT_DATE
+       FROM win_days
+       WHERE win_date <= CURRENT_DATE
      )
      SELECT COUNT(*)::int AS streak
      FROM grouped
-     WHERE grp = (SELECT grp FROM grouped ORDER BY play_date DESC LIMIT 1)
+     WHERE grp = (SELECT grp FROM grouped ORDER BY win_date DESC LIMIT 1)
        AND EXISTS (
-         SELECT 1 FROM play_days
-         WHERE play_date IN (CURRENT_DATE, CURRENT_DATE - INTERVAL '1 day')
+         SELECT 1 FROM win_days
+         WHERE win_date IN (CURRENT_DATE, CURRENT_DATE - INTERVAL '1 day')
        )`,
     [userId],
   );

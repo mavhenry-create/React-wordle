@@ -23,12 +23,12 @@ export default function Wordle() {
     window.addEventListener("keyup", handleKeyup);
 
     if (isCorrect) {
-      setTimeout(() => setShowModal(true), 2000);
+      setTimeout(() => setShowModal(true), 2500);
       window.removeEventListener("keyup", handleKeyup);
     }
 
     if (turn > 5) {
-      setTimeout(() => setShowModal(true), 2000);
+      setTimeout(() => setShowModal(true), 2500);
       window.removeEventListener("keyup", handleKeyup);
     }
 
