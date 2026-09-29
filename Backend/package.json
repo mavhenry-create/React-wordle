@@ -8,7 +8,12 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "keywords": ["auth0", "express", "rate-limit", "helmet"],
+  "keywords": [
+    "auth0",
+    "express",
+    "rate-limit",
+    "helmet"
+  ],
   "author": "Maverick Henry",
   "license": "ISC",
   "type": "module",
@@ -20,7 +25,8 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.7.0",
     "express-validator": "^7.3.2",
-    "helmet": "^8.3.0"
+    "helmet": "^8.3.0",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "dotenv": "^17.4.2",
