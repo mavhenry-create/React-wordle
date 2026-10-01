@@ -31,6 +31,7 @@ app.use(helmet({
           "data:",
           "https://s.gravatar.com",
           "https://cdn.auth0.com",
+          "https://i0.wp.com",
         ],
       },
     },
