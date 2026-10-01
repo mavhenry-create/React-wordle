@@ -23,7 +23,18 @@ app.use(
     appBaseUrl: process.env.APP_BASE_URL,
   }),
 );
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://s.gravatar.com",
+          "https://cdn.auth0.com",
+        ],
+      },
+    },
+  }));
 app.use(cookieParser());
 
 app.use(cors({
