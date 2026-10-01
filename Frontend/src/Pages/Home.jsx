@@ -56,6 +56,20 @@ export default function Home() {
               Perks of having an account you can change your difficulty, word
               length And Play as much as you want!
             </p>
+            <h3 className='text-white'>Never played Clondle before?</h3>
+            <details>
+              <summary className="text-lg text-white cursor-pointer">How to play Clondle</summary>
+              <p className="text-white">
+                Clondle is a word guessing game where you try to guess the word of the day.
+              </p>
+              <ol className="text-white list-decimal list-inside">
+                <li>Guess the word by typing your guesses.</li>
+                <li>When you make a guess, you'll receive color-coded hints to help you figure out the correct word.</li>
+                <li>Green indicates that the letter is in the correct position!</li>
+                <li>Yellow indicates that the letter is in the word but in the wrong position.</li>
+                <li>Gray indicates that the letter is not in the word at all.</li>
+              </ol>
+            </details>
             <h2 className="text-lg text-white">Already have an account?</h2>
             <div className="flex gap-3 items-center justify-center mt-5">
               <button
