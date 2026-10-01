@@ -1,6 +1,7 @@
 # Clondle
 
 A Wordle inspired game Built with React, Express, and PostgreSQL as a full-stack learning Project
+Try it today <a href="https://clondle.up.railway.app">Clondle</a>
 
 ## Features
 
