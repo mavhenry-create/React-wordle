@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useEffect, useState } from "react";
+
+
 export default function Home() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -58,9 +60,9 @@ export default function Home() {
             <div className="flex gap-3 items-center justify-center mt-5">
               <button
                 onClick={() => {
-                  const returnTo = encodeURIComponent("http://localhost:5173/");
+                  
 
-                  window.location.href = `http://localhost:3000/auth/login?screen_hint=signup&returnTo=${returnTo}`;
+                  window.location.href = `/auth/login?screen_hint=signup&returnTo=${encodeURIComponent(window.location.origin + "/")}`;
                 }}
                 className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-gray-200 transition duration-300 pointer-fine:cursor-pointer"
               >
@@ -69,9 +71,9 @@ export default function Home() {
 
               <button
                 onClick={() => {
-                  const returnTo = encodeURIComponent("http://localhost:5173/");
+                  
 
-                  window.location.href = `http://localhost:3000/auth/login?returnTo=${returnTo}`;
+                  window.location.href = `/auth/login?returnTo=${encodeURIComponent(window.location.origin + "/")}`;
                 }}
                 className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-gray-200 transition duration-300 pointer-fine:cursor-pointer"
               >
