@@ -35,6 +35,8 @@ app.use(express.json());
 
 app.use(express.static(frontendDist));
 
+app.set("trust proxy", 1);
+
 app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(frontendDist, "index.html"));
 });
